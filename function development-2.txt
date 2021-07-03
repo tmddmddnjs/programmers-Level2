@@ -1,0 +1,78 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <queue>
+#define MAX 100
+using namespace std;
+
+vector<int> solution(vector<int> progresses, vector<int> speeds) {
+	vector<int> answer;
+	queue<int> next, nn;
+
+	//100 - progresses, count에 각 i마다 시간 계산
+	int count = 0;
+	int speed = 0;
+	for (int i = 0; i < progresses.size(); i++) {
+		answer.push_back(MAX - progresses[i]);
+		while (true) {
+			speed += speeds[i];
+			count++;
+			if (answer[i] <= speed) {
+				next.push(count);
+				break;
+			}
+		}
+		count = 0;
+		speed = 0;
+	}
+	//answer안의 size와 capacity초기화
+	answer.clear();
+	vector<int>().swap(answer);
+
+	//5 10 1 1 20 1을 5 10 10 10 20 20으로 변환해서 nn안에 push
+	int pre = next.front();
+	next.pop();
+	while (!next.empty()) {		
+		if (!next.empty() && pre >= next.front()) {
+			nn.push(pre);
+		}
+		else {
+			nn.push(pre);
+			pre = next.front();
+		}	
+		if (next.size() == 1) 
+			nn.push(pre);
+		next.pop();
+	}
+	//7 7 9
+	//5 10 10 10 20 20
+	//하나씩 pop하면서 앞에거랑 비교
+	pre = nn.front();
+	nn.pop();
+	count = 1;
+	while (!nn.empty()) {	
+		//front와 pop이 같다면
+		if (!nn.empty() && pre == nn.front()) {
+			count++;
+		}
+		else {
+			answer.push_back(count);
+			count = 1;
+		}
+		if (nn.size() == 1) {
+			answer.push_back(count);
+		}
+		pre = nn.front();
+		nn.pop();
+	}
+	for (int i = 0; i < answer.size(); i++) {
+		cout << answer[i] << ' ';
+	}
+	cout << endl;
+	return answer;
+}
+
+int main() {
+	solution({ 93, 30, 55 }, { 1, 30, 5 }); //2, 1
+	solution({ 95, 90, 99, 99, 80, 99 }, { 1, 1, 1, 1, 1, 1 }); //1, 3, 2
+}
