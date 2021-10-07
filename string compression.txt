@@ -1,0 +1,50 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int solution(string s) {
+	int answer = s.length();
+	string temp = "";
+	for (int i = 1; i <= s.length() / 2; i++) {
+		temp = "";
+		int position = 0;
+		int count = 0;
+		while (true) {
+			string first = s.substr(position, i);
+			position += i;
+			if (position >= s.length()) {
+				temp += first;
+				break;
+			}
+			while (true) {
+				if (first.compare(s.substr(position, i)) == 0) {
+					position += i;
+					count++;
+				}
+				else {
+					if (count != 0)
+						temp += to_string(count + 1);
+					temp += first;
+					count = 0;
+					break;
+				}
+			}
+		}
+		int minimum = temp.length();
+		answer = min(answer, minimum);
+		cout << temp << endl;
+	}
+	cout << "작은거 : " << answer << endl;
+	cout << endl;
+	return answer;
+}
+
+int main() {
+	solution("aabbaccc"); //7 2a2ba3c
+	solution("ababcdcdababcdcd"); //9 2ababcdcd
+	solution("abcabcdede"); //8 2abcdede
+	solution("abcabcabcabcdededededede"); //14 2abcabc2dedede
+	solution("xababcdcdababcdcd"); //17 xababcdcdababcdcd
+}
