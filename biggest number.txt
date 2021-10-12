@@ -1,0 +1,31 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+bool ex(string num1, string num2) {
+	return num1 + num2 > num2 + num1;
+}
+
+string solution(vector<int> number) {
+	string answer = "";
+	vector<string> blank;
+	for (int i = 0; i < number.size(); i++) 
+		blank.push_back(to_string(number[i]));
+	sort(blank.begin(), blank.end(), ex);
+	for (int i = 0; i < blank.size(); i++)
+		answer.append(blank[i]);
+	if (blank.at(0) == "0")
+		return "0";
+	cout << answer;
+	cout << endl;
+	return answer;
+}
+
+int main() {
+	solution({ 6,10,2 }); //6210
+	solution({ 3,30,34,5,9 }); //9534330
+	solution({ 3,4,3,4 }); //4433
+	solution({ 0,0,0,0,0,0 }); //0
+}
