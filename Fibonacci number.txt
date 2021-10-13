@@ -1,0 +1,41 @@
+#include <string>
+#include <vector>
+#include <iostream>
+#define NUM 1234567
+
+using namespace std;
+
+/* 재귀함수의 계속된 호출로 시간 초과뜸
+int fib(int n) {
+	int temp;
+	if (n == 0)
+		return 0;
+	else if (n == 1)
+		return 1;
+	else {
+		temp = (fib(n - 1) + fib(n - 2) % NUM);
+		return temp;
+	}
+}
+
+int solution(int n) {
+	int answer = 0;
+	answer = fib(n);
+	cout << answer << endl;
+	return answer;
+}
+*/
+int solution(int n) {
+	int answer = 0;
+	int fib[100000] = { 0,1 };
+	for (int i = 2; i <= n; i++) 
+		fib[i] = (fib[i - 1] + fib[i - 2]) % NUM;
+	answer = fib[n];
+	cout << answer << endl;
+	return answer;
+}
+
+int main() {
+	solution(3);
+	solution(5);
+}
