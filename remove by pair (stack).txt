@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+int solution(string s) {
+	int answer = 0;
+	stack<char> q;
+	for (int i = 0; i < s.length(); i++) {
+		if (q.empty() || s[i] != q.top())
+			q.push(s[i]);
+		else if (s[i] == q.top())
+			q.pop();
+	}
+
+	if (q.empty()) answer = 1;
+	else answer = 0;
+	cout << answer << endl;
+	return answer;
+}
+
+int main() {
+	solution("abaaba"); //1
+	solution("baabaa"); //1
+	solution("cdcd"); //0
+}

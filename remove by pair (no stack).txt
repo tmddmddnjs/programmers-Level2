@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+//효율성에서 통과하지 못함(stack)사용
+int solution(string s) {
+	int answer = 0;
+	for (;;) {
+		int pos = 0;
+		for (;;) {
+			if (pos >= s.length()) break;
+			if (s[pos] == s[pos+1]) {
+				string pre = s.substr(0, pos);
+				string nex = s.substr(pos + 2, s.length()-1);
+				s = pre + nex;
+				break;
+			}
+			else 
+				pos += 1;
+		}
+		if (s.compare("") == 0 || pos >= s.length()) break;
+	}
+	if (s.compare("") == 0)
+		answer = 1;
+	else
+		answer = 0;
+	cout << answer << endl;
+	return answer;
+}
+
+int main() {
+	solution("abaaba"); //1
+	solution("baabaa"); //1
+	solution("cdcd"); //0
+}
